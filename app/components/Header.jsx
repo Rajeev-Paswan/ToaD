@@ -34,7 +34,7 @@ export default function () {
     };
 
     return (
-        <div className="bg-[#000] text-white flex justify-between items-center border-b border-[#3e3e3e] overflow-hidden mb-8">
+        <div className="bg-[#000] text-white flex justify-between items-center border-b border-[#3e3e3e] overflow-hidden">
             <Link href={"/"} className="text-2xl px-6">
                 ToaD
             </Link>

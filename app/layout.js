@@ -14,11 +14,13 @@ const poppins = Poppins({
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body className={`${poppins.className} min-h-screen`}>
+            <body className={`${poppins.className} h-screen overflow-hidden`}>
                 <ReduxProvider>
-                    <Header />
-                    {children}
-                    <Toaster />
+                    <div className="h-full flex flex-col gap-4">
+                        <Header />
+                        {children}
+                        <Toaster />
+                    </div>
                 </ReduxProvider>
             </body>
         </html>

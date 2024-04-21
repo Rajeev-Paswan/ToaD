@@ -65,11 +65,11 @@ export default function Home() {
 
     return (
         currentUser && (
-            <main className="h-[calc(100vh-15%)] w-full pb-2 ">
+            <main className="w-full h-full pb-2">
                 {/* <div className="text-center p-8">
                     Welcome, {currentUser.name}
                 </div> */}
-                <section className="h-full mx-4 rounded-lg bg-zinc-800 overflow-hidden">
+                <section className="relative h-full mx-4 rounded-lg bg-zinc-800 flex flex-col overflow-hidden">
                     <div className="h-14 w-full flex bg-zinc-800">
                         <button
                             className={`bg-zinc-800 m-1 rounded flex items-center justify-center flex-1 hover:bg-zinc-900 ${activeButton === "toDo" ? "bg-zinc-900" : ""
@@ -93,15 +93,14 @@ export default function Home() {
                             Complete
                         </button>
                     </div>
-                    <div className="h-[calc(100vh-28.5%)] bg-zinc-900 mx-1 p-4 rounded flex flex-wrap justify-between gap-4 overflow-y-scroll">
+                    <div className="bg-zinc-900 mx-1 p-4 max-h-[80vh] rounded flex flex-wrap justify-between gap-4 overflow-auto">
                         {tasks.map((task) => (
                             <Task key={task._id} task={task} fetchTask={fetchTask} />
                         ))}
-                        <div className="w-full">
-                            <button className="bg-black  w-full border border-gray-500 text-white px-4 py-2 rounded-lg" onClick={openModal}>Create Task</button>
-                            {isModalOpen && <CreateTaskModal onClose={closeModal} />}
-                        </div>
+                        <div className="p-8 w-full"></div>
                     </div>
+                    <button className="absolute bottom-0 bg-black border-4 border-zinc-800 w-full text-white px-4 py-2 rounded-lg" onClick={openModal}>Add Task</button>
+                    {isModalOpen && <CreateTaskModal onClose={closeModal} />}
                 </section>
             </main>
         )
