@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Task from "../app/components/Task.jsx";
 import CreateTaskModal from "./components/CreateTask.jsx";
+import Image from "next/image.js";
 
 export default function Home() {
     const { currentUser } = useSelector((state) => state.user);
@@ -93,12 +94,15 @@ export default function Home() {
                             Complete
                         </button>
                     </div>
-                    <div className="bg-zinc-900 mx-1 p-4 max-h-[80vh] rounded flex flex-wrap justify-between gap-4 overflow-auto">
+                    {tasks.length ? <div className="bg-zinc-900 mx-1 p-4 h-[80vh] rounded grid grid-cols-3 gap-4 overflow-auto pb-8 max-lg:grid-cols-2 max-md:grid-cols-1">
                         {tasks.map((task) => (
                             <Task key={task._id} task={task} fetchTask={fetchTask} />
                         ))}
-                        <div className="p-8 w-full"></div>
+                    </div> : 
+                    <div className="bg-zinc-900 mx-1 p-4 h-[80vh] rounded grid place-items-center" >
+                        <Image src={"/assets/EmptyBox.svg"} alt="No Tasks" width={300} height={300} />
                     </div>
+                    }
                     <button className="absolute bottom-0 bg-black border-4 border-zinc-800 w-full text-white px-4 py-2 rounded-lg" onClick={openModal}>Add Task</button>
                     {isModalOpen && <CreateTaskModal onClose={closeModal} />}
                 </section>
