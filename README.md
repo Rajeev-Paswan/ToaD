@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Toad: Task Management Made Easy
+
+Toad is a modern task management application built with Next.js 14 and MongoDB, designed to streamline your workflow and boost productivity. It's hosted at [toadtasks.vercel.app](https://toadtasks.vercel.app), offering a seamless and efficient experience for managing tasks.
+
+## Features
+
+- **Task Management**: Create, update, and delete tasks efficiently.
+- **MongoDB Integration**: Secure and scalable data storage for your tasks.
+- **Next.js 14**: Leverage the latest features of Next.js for a fast, scalable web application.
+- **Middleware for Database Connection**: Securely manage database connections.
 
 ## Getting Started
 
-First, run the development server:
+1. **Create an Account**: Visit [toadtasks.vercel.app](https://toadtasks.vercel.app) and sign up for a new account.
+2. **Manage Your Tasks**: Once logged in, you can start creating, updating, and deleting tasks to manage your workflow efficiently.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Why Choose Toad?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Toad is designed to cater to the needs of task-oriented individuals. Its integration with MongoDB ensures that your data is stored securely and efficiently, while the use of Next.js 14 provides a fast and responsive user experience. The application's architecture, built with Next.js 14 and MongoDB, offers a robust solution for client-side data fetching and manipulation. Whether you're managing a project, planning your day, or simply jotting down ideas, Toad offers a comprehensive solution for task management.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Visit [toadtasks.vercel.app](https://toadtasks.vercel.app) to start using Toad today and experience the difference in task management.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+![Toad Website Screenshot](./public/assets/toad-screenshot.png)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+*Image showcasing the Toad website interface, highlighting its modern design and user-friendly task management features.*
