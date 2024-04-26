@@ -10,6 +10,7 @@ export default function Home() {
     const { currentUser } = useSelector((state) => state.user);
     const router = useRouter();
     const [tasks, setTasks] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     console.log(currentUser);
 
@@ -52,9 +53,7 @@ export default function Home() {
         setActiveButton(type);
     };
 
-    // modal
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
+    // create task modal
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -100,7 +99,7 @@ export default function Home() {
                         ))}
                     </div> : 
                     <div className="bg-zinc-900 mx-1 p-4 h-[80vh] rounded grid place-items-center" >
-                        <Image src={"/assets/EmptyBox.svg"} alt="No Tasks" width={300} height={300} />
+                        <Image src={"/assets/EmptyBox.svg"} alt="No Tasks" loading="lazy" width={300} height={300} />
                     </div>
                     }
                     <button className="absolute bottom-0 bg-black border-4 border-zinc-800 w-full text-white px-4 py-2 rounded-lg" onClick={openModal}>Add Task</button>

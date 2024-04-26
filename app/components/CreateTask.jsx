@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
+import { IoIosClose } from "react-icons/io";
 
 export default function CreateTaskModal({ onClose }) {
   const { currentUser } = useSelector((state) => state.user);
@@ -21,8 +22,6 @@ export default function CreateTaskModal({ onClose }) {
         }
       );
 
-      // const responseData = await response.json();
-
       if (response.ok) {
         toast.success("Created task successfully");
         onClose()
@@ -38,15 +37,17 @@ export default function CreateTaskModal({ onClose }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="bg-zinc-900 p-6 rounded-lg shadow-lg z-10">
-        <div className="flex mb-4 justify-between">
-          <h2 className="text-xl font-bold text-center">Create Task</h2>
-          <button className=" bg-blue-500 text-white px-4 py-2 rounded" onClick={onClose}>Close</button>
+      <div className="bg-zinc-900 p-4 rounded-md shadow-lg z-10">
+        <div className="flex mb-4 items-center justify-between">
+          <h2 className="text-lg font-semibold text-center">Create Task</h2>
+          <button className="bg-zinc-800 text-lg text-white p-1 text-center rounded-full hover:bg-zinc-700" onClick={onClose}>
+            <IoIosClose />
+          </button>
         </div>
         {/* Task creation form goes here */}
         <form
           onSubmit={handleSubmit(submitHandler)}
-          className="bg-white text-black border rounded-xl p-6 flex flex-col w-[28rem]"
+          className="bg-zinc-800 rounded-xl p-4 flex flex-col w-[24rem] max-md:w-[80vw]"
         >
           {/* <p className="font-medium text-2xl text-center mb-6">Sign In</p> */}
           <input
@@ -66,7 +67,7 @@ export default function CreateTaskModal({ onClose }) {
           <select
             {...register("status")}
             name="status"
-            id="todoStatus" className="bg-black/10 px-4 py-1.5 mb-4">
+            className="bg-black/10 px-4 py-1.5 mb-4">
             <option value="todo">Todo</option>
             <option value="pending">Pending</option>
             <option value="complete">Complete</option>
