@@ -1,4 +1,4 @@
-// storage.js
+// to fix a error in persistor
 "use client"
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 

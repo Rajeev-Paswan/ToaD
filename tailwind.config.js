@@ -12,6 +12,15 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      keyframes: {
+        heart_beat: {
+          '72.5%': { opacity: 0 },
+          to: { strokeDashoffset: 0 },
+        },
+      },
+      animation: {
+        heart_beat: 'heart_beat 1.4s linear infinite',
+      },
     },
   },
   plugins: [],

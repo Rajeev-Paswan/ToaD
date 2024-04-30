@@ -2,39 +2,33 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import { IoIosClose } from "react-icons/io";
+import { useCreateTaskMutation } from "../lib/task/taskApi";
 
 export default function CreateTaskModal({ onClose }) {
-  const { currentUser } = useSelector((state) => state.user);
-  const { register, handleSubmit } = useForm();
+ const { currentUser } = useSelector((state) => state.user);
+ const { register, handleSubmit } = useForm();
+ const [createTask, { isLoading }] = useCreateTaskMutation();
 
-  const userId = currentUser._id;
+ const userId = currentUser._id;
 
-  const submitHandler = async (data) => {
+ const submitHandler = async (data) => {
     try {
-      const newTask = { ...data, userId }
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/task/create`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newTask),
-          // credentials: 'include',
-        }
-      );
+      const newTask = { ...data, userId };
+      const result = await createTask(newTask).unwrap();
 
-      if (response.ok) {
+      if (result) {
         toast.success("Created task successfully");
-        onClose()
+        onClose();
       } else {
         toast.error("Something went wrong");
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       toast.error("Can't connect to server!");
     }
-  };
+ };
 
-  return (
+ return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="bg-zinc-900 p-4 rounded-md shadow-lg z-10">
@@ -49,7 +43,6 @@ export default function CreateTaskModal({ onClose }) {
           onSubmit={handleSubmit(submitHandler)}
           className="bg-zinc-800 rounded-xl p-4 flex flex-col w-[24rem] max-md:w-[80vw]"
         >
-          {/* <p className="font-medium text-2xl text-center mb-6">Sign In</p> */}
           <input
             {...register("title", { required: true })}
             type="text"
@@ -74,14 +67,13 @@ export default function CreateTaskModal({ onClose }) {
           </select>
           <button
             type="submit"
-            // disabled={loading}
+            // disabled={isLoading}
             className="w-full text-white rounded-lg bg-[#000] py-3 hover:bg-[#2b2b2b]"
           >
-            {"Create"}
+            {isLoading ? "..." : "Create"}
           </button>
         </form>
-        {/* Task creation form goes here */}
       </div>
     </div>
-  );
+ );
 }

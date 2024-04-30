@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Header from "./components/Header";
-import { ReduxProvider } from "./redux/ReduxProvider";
+import { ReduxProvider } from "./lib/ReduxProvider";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -19,7 +19,9 @@ export default function RootLayout({ children }) {
                     <div className="h-full flex flex-col gap-4">
                         <Header />
                         {children}
-                        <Toaster />
+                        <div className="fixed top-0 right-0 m-4">
+                            <Toaster />
+                        </div>
                     </div>
                 </ReduxProvider>
             </body>

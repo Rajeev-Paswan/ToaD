@@ -1,32 +1,28 @@
-import { MdDeleteOutline } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
 import { useState } from "react";
+import { MdDeleteOutline } from "react-icons/md";
+import { TbRotateClockwise } from "react-icons/tb";
+import { MdEdit } from "react-icons/md";
 import EditTaskModal from "./EditTaskModal";
+import { useDeleteTaskMutation } from "../lib/task/taskApi";
 
-export default function ({ task, fetchTask }) {
+export default function ({ task }) {
     const [taskView, setTaskView] = useState(false);
+    const [deleteTask, { isLoading }] = useDeleteTaskMutation();
 
-    const deleteTask = async () => {
+    const handleDeleteTask = async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/task/delete/${task._id}`, { method: 'DELETE' });
-
-            if (response.ok) {
-                fetchTask()
-            }
-            console.log(response)
+            await deleteTask(task._id).unwrap();
         } catch (error) {
             console.error(error);
         }
-    }
+    };
 
-    // create task modal
     const openTaskView = () => {
         setTaskView(true);
     };
 
     const closeTaskView = () => {
         setTaskView(false);
-        fetchTask()
     };
 
     return (
@@ -46,8 +42,8 @@ export default function ({ task, fetchTask }) {
                 <button className="bg-green-600 px-5 py-0.5 rounded-full capitalize text-sm">
                     {task.status}
                 </button>
-                <button className="transition-all hover:bg-red-400 p-2 rounded-full bg-red-500" onClick={() => deleteTask()}>
-                    <MdDeleteOutline />
+                <button className="transition-all hover:bg-red-400 p-2 rounded-full bg-red-500" onClick={handleDeleteTask}>
+                    {isLoading ?  <TbRotateClockwise /> : <MdDeleteOutline /> }
                 </button>
             </div>
         </div>

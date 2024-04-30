@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
-import { MdDeleteOutline, MdSave } from "react-icons/md";
-import { Form, useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { MdSave } from "react-icons/md";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useUpdateTaskMutation } from "../lib/task/taskApi";
 
 export default function EditTaskModal({ onClose, task }) {
+    const [updateTask] = useUpdateTaskMutation();
     const { register, handleSubmit } = useForm({
         defaultValues: {
             title: task.title,
@@ -22,26 +24,14 @@ export default function EditTaskModal({ onClose, task }) {
 
     const submitHandler = async (data) => {
         try {
-            const response = await fetch(
-              `${process.env.NEXT_PUBLIC_API_URL}/api/task/update/${task._id}`,
-              {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
-              }
-            );
-      
-            if (response.ok) {
-              toast.success("Task updated successfully");
-              onClose()
-            } else {
-              toast.error("Something went wrong");
-            }
-          } catch (err) {
-            console.log(err)
-            toast.error(err.message);
-          }
-    }
+            await updateTask({ taskId: task._id, taskData: data }).unwrap();
+            toast.success("Task updated successfully");
+            onClose();
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong");
+        }
+    };
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
