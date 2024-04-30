@@ -9,9 +9,7 @@ import { useGetTasksQuery } from "./lib/task/taskApi";
 import Loading from "./components/Loading";
 
 export default function Home() {
-    // Access current user from Redux store
     const { currentUser } = useSelector((state) => state.user);
-    // Use RTK Query to fetch tasks
     const { data, isLoading: taskLoading, error } = useGetTasksQuery(currentUser?._id, { skip: !currentUser });
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
