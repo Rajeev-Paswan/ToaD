@@ -38,7 +38,7 @@ export default function Navbar() {
 
     return (
         <>
-            <div className={`bg-[#000] text-white h-16 flex justify-between items-center border-b border-[#3e3e3e] z-20`}>
+            <div className={`bg-[#000] text-white h-14 flex justify-between items-center border-b border-[#3e3e3e] z-20`}>
                 <Link href={'/'} className="text-2xl px-6">
                     ToaD
                 </Link>

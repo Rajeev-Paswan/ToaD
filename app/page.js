@@ -43,7 +43,7 @@ export default function Home() {
     return (
         currentUser && (
             <main className="w-full h-full pb-2">
-                <section className="relative h-full mx-4 rounded-lg bg-zinc-800 flex flex-col overflow-hidden">
+                <section className="relative h-full mx-2 rounded-lg bg-zinc-800 flex flex-col overflow-hidden">
                     <div className="h-14 w-full flex bg-zinc-800">
                         {/* Task status buttons */}
                         <button
@@ -67,12 +67,12 @@ export default function Home() {
                     </div>
                     {/* Display tasks or loading state */}
                     {taskLoading ? (
-                        <div className="bg-zinc-900 mx-1 p-4 rounded grid place-items-center h-[80vh]">
+                        <div className="bg-zinc-900 mx-1 p-4 rounded flex items-center justify-center h-full">
                             <Loading />
                         </div>
                     ) : (
                         tasks?.length ? (
-                            <div className="bg-zinc-900 mx-1 p-4 max-sm:p-2 h-[80vh] rounded grid grid-cols-3 gap-4 max-sm:gap-2 overflow-auto pb-8 max-lg:grid-cols-2 max-md:grid-cols-1">
+                            <div className="bg-zinc-900 mx-1 p-4 max-sm:p-2 h-[80vh] max-sm:h-full rounded grid grid-cols-3 gap-4 max-sm:gap-2 overflow-auto pb-8 max-lg:grid-cols-2 max-md:grid-cols-1">
                                 {tasks.filter((task) => task.status.toLowerCase() === activeButton).map((task) => (
                                     <Task key={task._id} task={task} />
                                 ))}
