@@ -14,7 +14,7 @@ const poppins = Poppins({
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body className={`${poppins.className} h-dvh overflow-hidden`}>
+            <body className={`${poppins.className} h-dvh max-md:svh overflow-hidden`}>
                 <ReduxProvider>
                     <div className="h-full flex flex-col gap-4">
                         <Header />
