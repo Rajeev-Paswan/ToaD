@@ -4,14 +4,21 @@ import { TbRotateClockwise } from "react-icons/tb";
 import { MdEdit } from "react-icons/md";
 import EditTaskModal from "./EditTaskModal";
 import { useDeleteTaskMutation } from "../lib/task/taskApi";
+import { setUserTasks } from "../lib/task/taskSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
 
 export default function ({ task }) {
     const [taskView, setTaskView] = useState(false);
     const [deleteTask, { isLoading }] = useDeleteTaskMutation();
+    const userTasks = useSelector(state => state.task);
+    const dispatch = useDispatch();
 
     const handleDeleteTask = async () => {
         try {
             await deleteTask(task._id).unwrap();
+            const updatedTasks = userTasks.filter((t) => t._id !== task._id);
+            dispatch(setUserTasks(updatedTasks));
         } catch (error) {
             console.error(error);
         }
@@ -26,7 +33,7 @@ export default function ({ task }) {
     };
 
     return (
-        <div key={task._id} className="bg-black p-4 rounded-lg h-56 w-full flex flex-col gap-4 justify-between overflow-hidden">
+        <div key={task._id || nanoid()} className="bg-black p-4 rounded-lg h-56 w-full flex flex-col gap-4 justify-between overflow-hidden">
             <div className="flex justify-between">
                 <span className="text-md bg-zinc-900 py-0.5 px-5 rounded-full uppercase">
                     {task.title}

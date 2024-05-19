@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import Header from "./components/Header";
 import { ReduxProvider } from "./lib/ReduxProvider";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -18,7 +19,9 @@ export default function RootLayout({ children }) {
                 <ReduxProvider>
                     <div className="h-svh flex flex-col gap-4 overflow-hidden">
                         <Header />
-                        {children}
+                        <ProtectedRoute>
+                            {children}
+                        </ProtectedRoute>
                         <div className="fixed top-0 right-0 m-4">
                             <Toaster />
                         </div>

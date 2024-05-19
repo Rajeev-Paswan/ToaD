@@ -1,42 +1,46 @@
-"use client"
+"use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Task from "../app/components/Task";
 import CreateTaskModal from "./components/CreateTaskModal";
 import { useGetTasksQuery } from "./lib/task/taskApi";
+import { setUserTasks } from "./lib/task/taskSlice";
 import Loading from "./components/Loading";
 
 export default function Home() {
     const { currentUser } = useSelector((state) => state.user);
     const { data, isLoading: taskLoading, error } = useGetTasksQuery(currentUser?._id, { skip: !currentUser });
-    const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const dispatch = useDispatch();
 
     const tasks = data?.tasks;
-
-    // Redirect to sign-in page if no current user
+    
     useEffect(() => {
-        if (!currentUser) {
-            router.push("/signin");
+        if (tasks) {
+            dispatch(setUserTasks(tasks));
         }
-    }, [currentUser, router]);
+    }, [tasks, dispatch]);
+    
+    const userTasks = useSelector((state) => state.task);
+
+    console.log(userTasks)
 
     // State for active task status filter
-    const [activeButton, setActiveButton] = useState("todo");
+    const [activeTaskStatus, setActiveTaskStatus] = useState("todo");
+    const filteredTasks = userTasks?.filter((task) => task.status.toLowerCase() === activeTaskStatus);
 
     // Function to handle task status button clicks
-    const handleButtonClick = (type) => {
-        setActiveButton(type);
+    const handleTaskStatusButtonClick = (status) => {
+        setActiveTaskStatus(status);
     };
 
     // Functions to open and close the task creation modal
-    const openModal = () => {
+    const openTaskCreationModal = () => {
         setIsModalOpen(true);
     };
 
-    const closeModal = () => {
+    const closeTaskCreationModal = () => {
         setIsModalOpen(false);
     };
 
@@ -47,20 +51,20 @@ export default function Home() {
                     <div className="h-14 w-full flex bg-zinc-800">
                         {/* Task status buttons */}
                         <button
-                            className={`bg-zinc-800 m-1 rounded flex items-center justify-center flex-1 transition-all hover:bg-zinc-900 ${activeButton === "todo" ? "bg-zinc-900" : ""}`}
-                            onClick={() => handleButtonClick("todo")}
+                            className={`bg-zinc-800 m-1 rounded flex items-center justify-center flex-1 transition-all hover:bg-zinc-900 ${activeTaskStatus === "todo" ? "bg-zinc-900" : ""}`}
+                            onClick={() => handleTaskStatusButtonClick("todo")}
                         >
                             To-Do
                         </button>
                         <button
-                            className={`bg-zinc-800 m-1 rounded flex items-center justify-center flex-1 transition-all hover:bg-zinc-900 ${activeButton === "pending" ? "bg-zinc-900" : ""}`}
-                            onClick={() => handleButtonClick("pending")}
+                            className={`bg-zinc-800 m-1 rounded flex items-center justify-center flex-1 transition-all hover:bg-zinc-900 ${activeTaskStatus === "pending" ? "bg-zinc-900" : ""}`}
+                            onClick={() => handleTaskStatusButtonClick("pending")}
                         >
                             Pending
                         </button>
                         <button
-                            className={`bg-zinc-800 m-1 rounded flex items-center justify-center flex-1 transition-all hover:bg-zinc-900 ${activeButton === "complete" ? "bg-zinc-900" : ""}`}
-                            onClick={() => handleButtonClick("complete")}
+                            className={`bg-zinc-800 m-1 rounded flex items-center justify-center flex-1 transition-all hover:bg-zinc-900 ${activeTaskStatus === "complete" ? "bg-zinc-900" : ""}`}
+                            onClick={() => handleTaskStatusButtonClick("complete")}
                         >
                             Complete
                         </button>
@@ -71,9 +75,9 @@ export default function Home() {
                             <Loading />
                         </div>
                     ) : (
-                        tasks?.length ? (
+                        filteredTasks.length ? (
                             <div className="bg-zinc-900 mx-1 p-4 max-sm:p-2 h-[80vh] max-sm:h-full rounded grid grid-cols-3 gap-4 max-sm:gap-2 overflow-auto pb-8 max-lg:grid-cols-2 max-md:grid-cols-1">
-                                {tasks.filter((task) => task.status.toLowerCase() === activeButton).map((task) => (
+                                {filteredTasks.map((task) => (
                                     <Task key={task._id} task={task} />
                                 ))}
                             </div>
@@ -84,9 +88,9 @@ export default function Home() {
                         )
                     )}
                     {/* Add task button */}
-                    <button className="absolute bottom-0 bg-black border-4 border-zinc-800 w-full text-white px-4 py-2 rounded-lg" onClick={openModal}>Add Task</button>
+                    <button className="absolute bottom-0 bg-black border-4 border-zinc-800 w-full text-white px-4 py-2 rounded-lg" onClick={openTaskCreationModal}>Add Task</button>
                     {/* Task creation modal */}
-                    {isModalOpen && <CreateTaskModal onClose={closeModal} />}
+                    {isModalOpen && <CreateTaskModal onClose={closeTaskCreationModal} />}
                 </section>
             </main>
         )

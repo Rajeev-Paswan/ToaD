@@ -1,19 +1,23 @@
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import { IoIosClose } from "react-icons/io";
 import { useCreateTaskMutation } from "../lib/task/taskApi";
+import { setUserTasks } from "../lib/task/taskSlice";
 
 export default function CreateTaskModal({ onClose }) {
  const { currentUser } = useSelector((state) => state.user);
+ const userTasks = useSelector(state => state.task)
  const { register, handleSubmit } = useForm();
  const [createTask, { isLoading }] = useCreateTaskMutation();
+ const dispatch = useDispatch();
 
  const userId = currentUser._id;
 
  const submitHandler = async (data) => {
     try {
       const newTask = { ...data, userId };
+      dispatch(setUserTasks([...userTasks, newTask]));
       const result = await createTask(newTask).unwrap();
 
       if (result) {

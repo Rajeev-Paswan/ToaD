@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./user/userSlice";
+import taskReducer from "./task/taskSlice"
 import { userApi } from "./user/userApi";
 import { taskApi } from "./task/taskApi"
 import persistStore from "redux-persist/lib/persistStore";
@@ -14,6 +15,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({ 
     user: userReducer,
+    task: taskReducer,
     [userApi.reducerPath]: userApi.reducer,
     [taskApi.reducerPath]: taskApi.reducer,
  });
